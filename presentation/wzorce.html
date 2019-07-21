@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Jakub Marchwicki">
+    <title>Wzorce projektowe i pielęgnacja kodu</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport">
+    <link href="../_shared/reveal.js/css/reveal.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_shared/css/custom_serif.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+    /*pre.CodeRay {background-color:#f7f7f8;}*/
+    .CodeRay .line-numbers {
+        border-right: 1px solid #d8d8d8;
+        padding: 0 0.5em 0 .25em
+    }
+
+    .CodeRay span.line-numbers {
+        display: inline-block;
+        margin-right: .5em;
+        color: rgba(0, 0, 0, .3)
+    }
+
+    .CodeRay .line-numbers strong {
+        color: rgba(0, 0, 0, .4)
+    }
+
+    table.CodeRay {
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 0;
+        border: 0;
+        background: none
+    }
+
+    table.CodeRay td {
+        vertical-align: top;
+        line-height: 1.45
+    }
+
+    table.CodeRay td.line-numbers {
+        text-align: right
+    }
+
+    table.CodeRay td.line-numbers > pre {
+        padding: 0;
+        color: rgba(0, 0, 0, .3)
+    }
+
+    table.CodeRay td.code {
+        padding: 0 0 0 .5em
+    }
+
+    table.CodeRay td.code > pre {
+        padding: 0
+    }
+
+    .CodeRay .debug {
+        color: #fff !important;
+        background: #000080 !important
+    }
+
+    .CodeRay .annotation {
+        color: #007
+    }
+
+    .CodeRay .attribute-name {
+        color: #000080
+    }
+
+    .CodeRay .attribute-value {
+        color: #700
+    }
+
+    .CodeRay .binary {
+        color: #509
+    }
+
+    .CodeRay .comment {
+        color: #998;
+        font-style: italic
+    }
+
+    .CodeRay .char {
+        color: #04d
+    }
+
+    .CodeRay .char .content {
+        color: #04d
+    }
+
+    .CodeRay .char .delimiter {
+        color: #039
+    }
+
+    .CodeRay .class {
+        color: #458;
+        font-weight: bold
+    }
+
+    .CodeRay .complex {
+        color: #a08
+    }
+
+    .CodeRay .constant, .CodeRay .predefined-constant {
+        color: #008080
+    }
+
+    .CodeRay .color {
+        color: #099
+    }
+
+    .CodeRay .class-variable {
+        color: #369
+    }
+
+    .CodeRay .decorator {
+        color: #b0b
+    }
+
+    .CodeRay .definition {
+        color: #099
+    }
+
+    .CodeRay .delimiter {
+        color: #000
+    }
+
+    .CodeRay .doc {
+        color: #970
+    }
+
+    .CodeRay .doctype {
+        color: #34b
+    }
+
+    .CodeRay .doc-string {
+        color: #d42
+    }
+
+    .CodeRay .escape {
+        color: #666
+    }
+
+    .CodeRay .entity {
+        color: #800
+    }
+
+    .CodeRay .error {
+        color: #808
+    }
+
+    .CodeRay .exception {
+        color: inherit
+    }
+
+    .CodeRay .filename {
+        color: #099
+    }
+
+    .CodeRay .function {
+        color: #900;
+        font-weight: bold
+    }
+
+    .CodeRay .global-variable {
+        color: #008080
+    }
+
+    .CodeRay .hex {
+        color: #058
+    }
+
+    .CodeRay .integer, .CodeRay .float {
+        color: #099
+    }
+
+    .CodeRay .include {
+        color: #555
+    }
+
+    .CodeRay .inline {
+        color: #000
+    }
+
+    .CodeRay .inline .inline {
+        background: #ccc
+    }
+
+    .CodeRay .inline .inline .inline {
+        background: #bbb
+    }
+
+    .CodeRay .inline .inline-delimiter {
+        color: #d14
+    }
+
+    .CodeRay .inline-delimiter {
+        color: #d14
+    }
+
+    .CodeRay .important {
+        color: #555;
+        font-weight: bold
+    }
+
+    .CodeRay .interpreted {
+        color: #b2b
+    }
+
+    .CodeRay .instance-variable {
+        color: #008080
+    }
+
+    .CodeRay .label {
+        color: #970
+    }
+
+    .CodeRay .local-variable {
+        color: #963
+    }
+
+    .CodeRay .octal {
+        color: #40e
+    }
+
+    .CodeRay .predefined {
+        color: #369
+    }
+
+    .CodeRay .preprocessor {
+        color: #579
+    }
+
+    .CodeRay .pseudo-class {
+        color: #555
+    }
+
+    .CodeRay .directive {
+        font-weight: bold
+    }
+
+    .CodeRay .type {
+        font-weight: bold
+    }
+
+    .CodeRay .predefined-type {
+        color: inherit
+    }
+
+    .CodeRay .reserved, .CodeRay .keyword {
+        color: #000;
+        font-weight: bold
+    }
+
+    .CodeRay .key {
+        color: #808
+    }
+
+    .CodeRay .key .delimiter {
+        color: #606
+    }
+
+    .CodeRay .key .char {
+        color: #80f
+    }
+
+    .CodeRay .value {
+        color: #088
+    }
+
+    .CodeRay .regexp .delimiter {
+        color: #808
+    }
+
+    .CodeRay .regexp .content {
+        color: #808
+    }
+
+    .CodeRay .regexp .modifier {
+        color: #808
+    }
+
+    .CodeRay .regexp .char {
+        color: #d14
+    }
+
+    .CodeRay .regexp .function {
+        color: #404;
+        font-weight: bold
+    }
+
+    .CodeRay .string {
+        color: #d20
+    }
+
+    .CodeRay .string .string .string {
+        background: #ffd0d0
+    }
+
+    .CodeRay .string .content {
+        color: #d14
+    }
+
+    .CodeRay .string .char {
+        color: #d14
+    }
+
+    .CodeRay .string .delimiter {
+        color: #d14
+    }
+
+    .CodeRay .shell {
+        color: #d14
+    }
+
+    .CodeRay .shell .delimiter {
+        color: #d14
+    }
+
+    .CodeRay .symbol {
+        color: #990073
+    }
+
+    .CodeRay .symbol .content {
+        color: #a60
+    }
+
+    .CodeRay .symbol .delimiter {
+        color: #630
+    }
+
+    .CodeRay .tag {
+        color: #008080
+    }
+
+    .CodeRay .tag-special {
+        color: #d70
+    }
+
+    .CodeRay .variable {
+        color: #036
+    }
+
+    .CodeRay .insert {
+        background: #afa
+    }
+
+    .CodeRay .delete {
+        background: #faa
+    }
+
+    .CodeRay .change {
+        color: #aaf;
+        background: #007
+    }
+
+    .CodeRay .head {
+        color: #f8f;
+        background: #505
+    }
+
+    .CodeRay .insert .insert {
+        color: #080
+    }
+
+    .CodeRay .delete .delete {
+        color: #800
+    }
+
+    .CodeRay .change .change {
+        color: #66f
+    }
+
+    .CodeRay .head .head {
+        color: #f4f
+    }</style>
+    <link href="../_shared/reveal.js/lib/css/zenburn.css" rel="stylesheet">
+    <script>document.write('<link rel="stylesheet" href="../_shared/reveal.js/css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');</script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section><h1>Wzorce projektowe i pielęgnacja kodu</h1>
+            <p>
+                <small>Jakub Marchwicki</small>
+            </p>
+        </section>
+        <section>
+            <section id="slide_wzorce_projektowe" data-background="../_shared/background.jpg" data-background-size="cover"><h2>Wzorce projektowe</h2></section>
+            <section id="patterns-spis-tresci"><h2>Wzorce projektowe</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Pojęcie wzorca projektowego</p></li>
+                        <li><p>Historia powstania wzorców</p></li>
+                        <li><p>Cechy wzorca projektowego</p></li>
+                        <li><p>Przykłady wzorców projektowych</p></li>
+                        <li><p>Kategorie wzorców projektowych</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorzec_projektowy"><h2>Wzorzec projektowy</h2>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/design_pattern.png" alt="design pattern" width="800"></div>
+                </div>
+            </section>
+            <section id="slide_korzenie_architektoniczne"><h2>Korzenie architektoniczne</h2>
+                <div class="quoteblock">
+                    <blockquote>Każdy wzorzec opisuje problem, który ciągle pojawia się w naszej dziedzinie, a następnie określa zasadniczą część jego
+                        rozwiązania w taki sposób, by można było zastosować je nawet milion razy, za każdym razem w nieco inny sposób.
+                    </blockquote>
+                    <div class="attribution"><cite>A Patterns Language (1977)</cite><br>&#8212; Alexander Christopher</div>
+                </div>
+            </section>
+            <section id="slide_początki_wzorców_projektowych"><h2>Początki wzorców projektowych</h2>
+                <div class="paragraph">
+                    <div class="title">Design Patterns: Elements of Reusable Object-Oriented Software, 1995</div>
+                    <p>autorzy: Gamma, Help, Johnson, Vlissides</p></div>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Katalog 23 wzorców projektowych</p></li>
+                        <li><p>Pokazanie zastosowania wzorców projektowych w dziedzinie projektowania oprogramowania</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_podział_wzorców_projektowych"><h2>Podział wzorców projektowych</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><strong>Wzorce projektowe GoF</strong><br>
+                            Gamma, Help, Johnson, Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software, 1995</p></li>
+                        <li><p><strong>Wzorce architektoniczne</strong><br>
+                            Pattern-Oriented Software Architecture (seria), 1996-2007<br>
+                            Fowler, Patterns of Enterprise Application Architecture, 2002</p></li>
+                        <li><p><strong>Wzorce integracyjne</strong><br>
+                            Hohpe, Woolf, <a href="http://www.enterpriseintegrationpatterns.com" class="bare">http://www.enterpriseintegrationpatterns.com</a>
+                        </p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_cechy_wzorca_projektowego"><h2>Cechy wzorca projektowego</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Wzorzec projektowy identyfikuje najważniejsze aspekty struktury typowego rozwiązania.</p></li>
+                        <li><p>Określa uczestniczące w nim klasy i obiekty, ich rolę, współpracę oraz podział odpowiedzialności.</p></li>
+                        <li><p>Dotyczy konkretnego zagadnienia projektowania obiektowego.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_kluczowe_elementy_opisu"><h2>Kluczowe elementy opisu</h2>
+                <div class="dlist">
+                    <dl>
+                        <dt class="hdlist1">Nazwa</dt>
+                        <dd><p>identyfikuje wzorzec</p></dd>
+                        <dt class="hdlist1">Cel</dt>
+                        <dd><p>Definicja wzorca</p></dd>
+                        <dt class="hdlist1">Motywacja</dt>
+                        <dd><p>Opis problemu i zasady jego rozwiązania</p></dd>
+                        <dt class="hdlist1">Zastosowanie</dt>
+                        <dd><p>Sytuacje, w których wzorzec można zastosować</p></dd>
+                    </dl>
+                </div>
+            </section>
+            <section id="slide_kluczowe_elementy_opisu_2"><h2>Kluczowe elementy opisu</h2>
+                <div class="dlist">
+                    <dl>
+                        <dt class="hdlist1">Struktura</dt>
+                        <dd><p>Diagram ilustrujący związki między klasami wzorca.</p></dd>
+                        <dt class="hdlist1">Uczestnicy</dt>
+                        <dd><p>Opis zakresów odpowiedzialności i ról klas oraz obiektów</p></dd>
+                        <dt class="hdlist1">Konsekwencje</dt>
+                        <dd><p>Wady i zalety wzorca</p></dd>
+                        <dt class="hdlist1">Implementacja</dt>
+                        <dd><p>Przykład zastosowania wzorca</p></dd>
+                    </dl>
+                </div>
+            </section>
+            <section id="slide_dlaczego"><h2>Dlaczego?</h2>
+                <div class="ulist">
+                    <div class="title">Ponieważ wzorce projektowe:</div>
+                    <ul>
+                        <li><p>Powstały na bazie wiedzy i umiejętności ekspertów.</p></li>
+                        <li><p>Zostały wyodrębnione w skutek analizy sprawdzonych rozwiązań.</p></li>
+                        <li><p>Sprawdziły się wcześniej wielokrotnie.</p></li>
+                        <li><p>Tworzą język porozumienia na poziomie projektowym.</p></li>
+                        <li><p>Umożliwiają i ułatwiają myślenie na wyższym poziomie abstrakcji.</p></li>
+                        <li><p>Pozwalają dogłębnie zrozumieć zasady programowania zorientowanego obiektowo.</p></li>
+                        <li><p>Umożliwiają tworzenie elastycznego oprogramowania.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_kategorie_wzorców_gof"><h2>Kategorie wzorców GoF</h2>
+                <table class="tableblock frame-all grid-all" style="width:100%">
+                    <colgroup>
+                        <col style="width:33.3333%">
+                        <col style="width:33.3333%">
+                        <col style="width:33.3334%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Kreacyjne</th>
+                        <th class="tableblock halign-left valign-top">Strukturalne</th>
+                        <th class="tableblock halign-left valign-top">Behawioralne</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Simple Factory</p></li>
+                                        <li><p>Factory Method</p></li>
+                                        <li><p>Builder</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Adapter</p></li>
+                                        <li><p>Decorator</p></li>
+                                        <li><p>Proxy</p></li>
+                                        <li><p>Facade</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Template Method</p></li>
+                                        <li><p>Command</p></li>
+                                        <li><p>Observer</p></li>
+                                        <li><p>Strategy</p></li>
+                                        <li><p>Chain of Responsibility</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="slide_inny_podział_wzorców"><h2>Inny podział wzorców</h2>
+                <table class="tableblock frame-all grid-all" style="width:100%">
+                    <colgroup>
+                        <col style="width:50%">
+                        <col style="width:50%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top">Wzorce klas</th>
+                        <th class="tableblock halign-left valign-top">Wzorce obiektów</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Template Method</p></li>
+                                        <li><p>Factory Method</p></li>
+                                        <li><p>Adapter</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Decorator</p></li>
+                                        <li><p>Proxy</p></li>
+                                        <li><p>Facade</p></li>
+                                        <li><p>Command</p></li>
+                                        <li><p>Observer</p></li>
+                                        <li><p>Strategy</p></li>
+                                        <li><p>Chain of Responsibility</p></li>
+                                        <li><p>Builder</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="slide_przykładowy_wzorzec"><h2>Przykładowy wzorzec</h2>
+                <div class="dlist">
+                    <dl>
+                        <dt class="hdlist1">Nazwa</dt>
+                        <dd><p><strong>Simple Factory</strong></p></dd>
+                    </dl>
+                </div>
+            </section>
+            <section id="slide_przykładowy_wzorzec_2"><h2>Przykładowy wzorzec</h2>
+                <div class="dlist">
+                    <dl>
+                        <dt class="hdlist1">Nazwa</dt>
+                        <dd><p><strong>Simple Factory</strong></p></dd>
+                    </dl>
+                </div>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec <em>Simple Factory</em> hermetyzuje tworzenie rodziny obiektów.</p></li>
+                        <li><p>Podejmuje decyzję o tym jaki obiekt należy utworzyć i tworzy go.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencja</div>
+                    <ul>
+                        <li><p>Pojedyncze miejsce w systemie odpowiedzialne za tworzenie rodziny obiektów</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_przykładowy_wzorzec_3"><h2>Przykładowy wzorzec</h2>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Wyodrębnienie tworzenia obiektów do osobnej dedykowanej ku temu klasy</p></li>
+                        <li><p>Prosta fabryka tworząca obiekt połączenia do bazy danych określonego typu</p></li>
+                        <li><p>Prosta fabryka tworząca obiekt modelu danych na podstawie jego sygnatury</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_przykładowy_wzorzec_4"><h2>Przykładowy wzorzec</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/simple-factory.png" alt="simple factory" width="521" height="252"></div>
+                </div>
+            </section>
+        </section>
+        <section>
+            <section id="slide_katalog_wzorców" data-background="../_shared/background.jpg" data-background-size="cover"><h2>Katalog wzorców</h2></section>
+            <section id="catalog-spis-tresci"><h2>Katalog wzorców</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><strong>Wzorce kreacyjne</strong></p></li>
+                        <li><p>Wzorce behawioralne</p></li>
+                        <li><p>Wzorce strukturalne</p></li>
+                        <li><p>Podsumowanie wzorców GoF</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_kreacyjne"><h2>Wzorce kreacyjne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Prowadzą do utworzenia obiektu.</p></li>
+                        <li><p>Separują tworzenie obiektów od klienta, który je tworzy.</p></li>
+                        <li><p>Ułatwiają budowę systemu, który jest niezależny od sposobu tworzenia i składania obiektów.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_kreacyjne_2"><h2>Wzorce kreacyjne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><a href="#slide_simple_factory">Simple Factory</a> - dostarczenie interfejsu do tworzenia obiektów nieokreślonych jako
+                            powiązanych typów.</p></li>
+                        <li><p><a href="#slide_singleton">Singleton</a> - ograniczenie możliwości tworzenia obiektów danej klasy do jednej instancji oraz
+                            zapewnienie globalnego dostępu do stworzonego obiektu.</p></li>
+                        <li><p><a href="#slide_builder">Builder</a> - rozdzielenie sposobu tworzenia obiektów od ich reprezentacji. Innymi słowy proces
+                            tworzenia obiektu podzielony jest na kilka mniejszych etapów a każdy z tych etapów może być implementowany na wiele sposobów.</p>
+                        </li>
+                        <li><p>Prototype - umożliwienie tworzenia obiektów danej klasy bądź klas z wykorzystaniem już istniejącego obiektu, zwanego
+                            prototypem</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_simple_factory"><h2>Simple Factory</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-factory-method-example.png" alt="patterns factory method example" width="703" height="328">
+                    </div>
+                </div>
+            </section>
+            <section id="slide_simple_factory_2"><h2>Simple Factory</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-factory-method-proto.png" alt="patterns factory method proto" width="428" height="145"></div>
+                </div>
+            </section>
+            <section id="slide_simple_factory_3"><h2>Simple Factory</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec <em>Simple Factory</em> hermetyzuje tworzenie rodziny obiektów.</p></li>
+                        <li><p>Podejmuje decyzję o tym jaki obiekt należy utworzyć i tworzy go.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencja</div>
+                    <ul>
+                        <li><p>Pojedyncze miejsce w systemie odpowiedzialne za tworzenie rodziny obiektów</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Wyodrębnienie tworzenia obiektów do osobnej dedykowanej ku temu klasy</p></li>
+                        <li><p>Prosta fabryka tworząca obiekt połączenia do bazy danych określonego typu</p></li>
+                        <li><p>Prosta fabryka tworząca obiekt modelu danych na podstawie jego sygnatury</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_singleton"><h2>Singleton</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-singleton.png" alt="patterns singleton" width="371" height="110"></div>
+                </div>
+            </section>
+            <section id="slide_singleton_2"><h2>Singleton</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Singleton zapewnia, że klasa ma tylko jeden egzemplarz i zapewnia globalny dostęp do niego.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Klasa Singleton może ściśle kontrolować dostęp do swojego jedynego egzemplarza.</p></li>
+                        <li><p>Można użyć wzorca Singleton do kontrolowania liczby obiektów typu Singleton.</p></li>
+                        <li><p>Wzorzec Singleton wprowadza zmienną globalną i usztywnia projekt.</p></li>
+                        <li><p>Należy unikać stosowania wzorca Singleton, chyba że jest to konieczne.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_builder"><h2>Builder</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-builder-example.png" alt="patterns builder example" width="895" height="434"></div>
+                </div>
+            </section>
+            <section id="slide_builder_2"><h2>Builder</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-builder-proto.png" alt="patterns builder proto" width="633" height="235"></div>
+                </div>
+            </section>
+            <section id="slide_builder_3"><h2>Builder</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Builder pozwala konstruować obiekty z komponentów.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Wzorzec Builder oddziela kod służący do konstruowania produktu od jego wewnętrznej reprezentacji.</p></li>
+                        <li><p>Klient nie musi nic wiedzieć o wewnętrznej strukturze obiektu Product stworzonego przez obiekt Builder.</p></li>
+                        <li><p>Klient ma wysoką kontrolę nad procesem tworzenia obiektu, gdyż nadzoruje ten proces krok po kroku.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>W przypadku gdy potrzebujemy skomplikowaną strukturę obiektową konstruować w prosty sposób.</p></li>
+                        <li><p>Kreator tworzący obiekty w kilku etapach</p></li>
+                        <li><p>Obiekt odpowiedzialny za składanie tekstu i generowanie raportu</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_katalog_wzorców_2"><h2>Katalog wzorców</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Wzorce kreacyjne</p></li>
+                        <li><p><strong>Wzorce behawioralne</strong></p></li>
+                        <li><p>Wzorce strukturalne</p></li>
+                        <li><p>Podsumowanie wzorców GoF</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_behawioralne"><h2>Wzorce behawioralne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Dotyczą interakcji pomiędzy klasami i obiektami.</p></li>
+                        <li><p>Omawiają sposoby podziału odpowiedzialności pomiędzy klasami.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_behawioralne_2"><h2>Wzorce behawioralne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><a href="#slide_command">Command</a> - traktujący żądanie wykonania określonej czynności jako obiekt, dzięki czemu mogą być one
+                            parametryzowane w zależności od rodzaju odbiorcy, a także umieszczane w kolejkach i dziennikach.</p></li>
+                        <li><p><a href="#slide_strategy">Strategy</a> - definiuje rodzinę wymiennych algorytmów i kapsułkuje je w postaci klas. Umożliwia
+                            wymienne stosowanie każdego z nich w trakcie działania aplikacji niezależnie od korzystających z nich klientów.</p></li>
+                        <li><p><a href="#slide_observer">Observer</a> - używany do powiadamiania zainteresowanych obiektów o zmianie stanu pewnego innego
+                            obiektu.</p></li>
+                        <li><p><a href="#slide_chain_of_responsibility">Chain of Responsibility</a> - umożliwia przetwarzanie żądania przez różne obiekty, w
+                            zależności od typu</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_behawioralne_3"><h2>Wzorce behawioralne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><a href="#slide_template_method">Template Method</a> - definiuje metodę, będącą szkieletem algorytmu. Algorytm ten może być
+                            następnie dokładnie definiowany w klasach pochodnych.</p></li>
+                        <li><p>Iterator - zapewnia sekwencyjny dostęp do podobiektów zgrupowanych w większym obiekcie.</p></li>
+                        <li><p>State - umożliwia zmianę zachowania obiektu poprzez zmianę jego stanu wewnętrznego.</p></li>
+                        <li><p>Visitor - odseparowanie algorytmu od struktury obiektowej na której operuje. Praktycznym rezultatem tego odseparowania jest
+                            możliwość dodawania nowych operacji do aktualnych struktur obiektów bez konieczności ich modyfikacji.</p></li>
+                        <li><p>Memento - zapamiętuje i udostępnia na zewnątrz wewnętrzny stanu obiektu bez naruszania hermetyzacji. Umożliwia to przywracnie
+                            zapamiętanego stanu obiektu.</p></li>
+                        <li><p>Mediator - zapewnia jednolity interfejs do różnych elementów danego podsystemu.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_command"><h2>Command</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-command-example.png" alt="patterns command example" width="769" height="286"></div>
+                </div>
+            </section>
+            <section id="slide_command_2"><h2>Command</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-command-proto.png" alt="patterns command proto" width="218" height="162"></div>
+                </div>
+            </section>
+            <section id="slide_command_3"><h2>Command</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Command hermetyzuje żądania w postaci obiektów.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Wzorzec Command separuje obiekt wywołujący polecenie od obiektu, który wie jak je zrealizować.</p></li>
+                        <li><p>Obiekty Command mogą być rozszerzane tak jak inne obiekty.</p></li>
+                        <li><p>Dodawanie obiektów Command nie wymaga modyfikowania istniejących obiektów klas.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Implementowanie wycofywalnych operacji</p>
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Kolejkowanie zadań</p></li>
+                                    <li><p>Księgowanie żądań</p></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_strategy"><h2>Strategy</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-strategy-example.png" alt="patterns strategy example" width="617" height="262"></div>
+                </div>
+            </section>
+            <section id="slide_strategy_2"><h2>Strategy</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorec Strategy tworzy rodzinę podobnych algorytmów i daje możliwość ich podmiany w trakcie działania programu.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Implementacja jednego algorytmu na różne sposoby</p></li>
+                        <li><p>Serializowanie danych do plików o różnych formatach</p></li>
+                        <li><p>Wyliczanie fragmentu algorytmu na różne sposoby</p></li>
+                        <li><p>Zapisywanie obrazka z wykorzystniem różnych rodzajów algorytmów</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_strategy_3"><h2>Strategy</h2>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Wzorzec Strategy definiuje rodzinę algorytmów powiązanych ze sobą.</p></li>
+                        <li><p>Korzystanie z wzorca Strategy może być alternatywą dla korzystania z dziedziczenia w celu wyodrębnienia nowych algorytmów.</p>
+                        </li>
+                        <li><p>Hermetyzacja algorytmu w osobnych klasach ConcreteStrategy umożliwia jego modyfikowanie niezależnie od klasy Context.</p></li>
+                        <li><p>Wzorzec Strategy eliminuje przeładowane instrukcje warunkowe.</p></li>
+                        <li><p>Klient musi rozumieć, czym różnią się poszczególne strategie, aby móc dokonać dobrego wyboru strategii.</p></li>
+                        <li><p>Interfejs Strategy jest identyczny dla wszystkich algorytmów, co może prowadzić do przekazywania niepotrzebnych parametrów.</p>
+                        </li>
+                        <li><p>Nadmierne stosowanie wzorca Strategy może doprowadzić do powstania dużej ilości małych obiektów w systemie.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_observer"><h2>Observer</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-observer-example.png" alt="patterns observer example" width="440" height="210"></div>
+                </div>
+            </section>
+            <section id="slide_observer_2"><h2>Observer</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Observer umożliwia powiadamianie grupy obiektów o zmianie stanu obiektu obserwowanego.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Wzorzec Observer zapewnia luźne powiązanie pomiędzy obiektami.</p></li>
+                        <li><p>Umożliwia niezależne wymienianie obiektów obserwowanych i obserwatorów.</p></li>
+                        <li><p>Umożliwia dodawanie obserwatorów bez konieczności modyfikowania kodu obiektu obserwowanego.</p></li>
+                        <li><p>Powiadomienie wysyłane przez obserwowanego nie musi specyfikować odbiorcy.</p></li>
+                        <li><p>Prosta operacja może wywołać kaskadę kosztownych uaktualnień.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Informowanie o wydarzeniach zachodzących w systemie</p></li>
+                        <li><p>Informowanie widoku o zmianach w modelu danych</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_chain_of_responsibility"><h2>Chain of Responsibility</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-chain-of-responsibility-example.png" alt="patterns chain of responsibility example"
+                                              width="582" height="274"></div>
+                </div>
+            </section>
+            <section id="slide_chain_of_responsibility_2"><h2>Chain of Responsibility</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Chain of Responsibility tworzy łańcuch odbiorców i przekazuje wzdłuż niego żądanie, aż jakiś obiekt je obsłuży.</p></li>
+                        <li><p>Separuje nadawcę żądania od jego odbiorców i umożliwia dynamiczne określenie odbiorcy żądania.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Nadawca i odbiorca żądania nie są ze sobą powiązani.</p></li>
+                        <li><p>Nadawca żądania nie musi nic wiedzieć o odbiorcy. Wie tylko, że jakiś obiekt je obsłuży.</p></li>
+                        <li><p>Można dynamicznie dodawać/usuwać obiekty obsługujące żądania.</p></li>
+                        <li><p>Istnieje możliwość, że żądanie może zostać nieobsłużone, jeżeli łańcuch jest źle skonfigurowany.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Obsługa zdarzeń myszy i klawiatury w systemach okienkowych.</p></li>
+                        <li><p>Filtrowanie danych w konfigurowalny sposób.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_template_method"><h2>Template Method</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-template-method-example.png" alt="patterns template method example" width="440" height="253">
+                    </div>
+                </div>
+            </section>
+            <section id="slide_template_method_2"><h2>Template Method</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Template Method umożliwia podklasom przedefiniowanie pewnych kroków algorytmu bez zmiany struktury tego algorytmu.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>W przypadku implementowania wzorca Template Method ważne jest określenie operacji, które mogą być przedefiniowywane i tych które
+                            muszą być przedefiniowywane.</p></li>
+                        <li><p>Podklasy mogą rozszerzać działanie operacji z nadklasy poprzez przeciążenie jej i jawne jej wywołanie.</p></li>
+                        <li><p>Nadklasa definiuje wymagane kroki algorytmu i ich kolejność, natomiast podklasy określają, czy chcą te kroki zaimplementować czy
+                            też rozszerzyć ich domyślne wersje.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Gotowe szablony do tworzenia dedykowanych rozwiązań.</p></li>
+                        <li><p>Rodziny algorytmów o podobnym ogólnym schemacie działania.</p></li>
+                        <li><p>Gotowy szablon algorytmu, który może występować w różnych odmianach.</p></li>
+                        <li><p>Zastosowanie Template Method do obsługi zapytań bazy danych.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_katalog_wzorców_3"><h2>Katalog wzorców</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Wzorce kreacyjne</p></li>
+                        <li><p>Wzorce behawioralne</p></li>
+                        <li><p><strong>Wzorce strukturalne</strong></p></li>
+                        <li><p>Podsumowanie wzorców GoF</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_strukturalne"><h2>Wzorce strukturalne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Opisują sposoby łączenia klas i obiektów w większe struktury.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_strukturalne_2"><h2>Wzorce strukturalne</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p><a href="#slide_adapter">Adapter</a> - umożliwiena współpracę dwóm klasom o niekompatybilnych interfejsach. Adapter przekształca
+                            interfejs jednej z klas na interfejs drugiej klasy.</p></li>
+                        <li><p>Decorator - polega na opakowaniu oryginalnej klasy w nową klasę "dekorującą". Zwykle przekazuje się oryginalny obiekt jako
+                            parametr konstruktora dekoratora, metody dekoratora wywołują metody oryginalnego obiektu i dodatkowo implementują nową funkcję.</p>
+                        </li>
+                        <li><p><a href="#slide_facade">Facade</a> - ujednolica dostęp do złożonego systemu poprzez wystawienie uproszczonego, uporządkowanego
+                            interfejsu programistycznego, który ułatwia jego użycie.</p></li>
+                        <li><p>Proxy - utworzenie obiektu zastępującego inny obiekt. Stosowany jest w celu kontrolowanego tworzenia na żądanie kosztownych
+                            obiektów oraz kontroli dostępu do nich.</p></li>
+                        <li><p>Composite - składanie obiektów w taki sposób, aby klient widział wiele z nich jako pojedynczy obiekt.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_adapter"><h2>Adapter</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-adapter-example.png" alt="patterns adapter example" width="516" height="286"></div>
+                </div>
+            </section>
+            <section id="slide_adapter_2"><h2>Adapter</h2>
+                <div class="paragraph"><p><strong>Struktura</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-adapter-proto.png" alt="patterns adapter proto" width="439" height="274"></div>
+                </div>
+            </section>
+            <section id="slide_adapter_3"><h2>Adapter</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Adapter przekształca interfejs klasy do postaci, której oczekują klienci.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Adapter może działać również z podklasami obiektu Adaptee.</p></li>
+                        <li><p>Zmiana zachowania obiektu Adaptee wymaga tworzenia podklas i odwoływania się obiektu Adapter bezpośrednio do nich.</p></li>
+                        <li><p>Adapter musi wykonać dodatkową pracę potrzebną do przystosowania interfejsu. Może to pogorszyć wydajność obliczeniową
+                            rozwiązania.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Włączanie klasy do systemu, który oczekuje od niej innego interfejsu.</p></li>
+                        <li><p>Adaptowanie zewnętrznej biblioteki do własnych interfejsów.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_facade"><h2>Facade</h2>
+                <div class="paragraph"><p><strong>Przykład</strong></p></div>
+                <div class="imageblock" style="">
+                    <div class="content"><img src="images/patterns-facade-example.png" alt="patterns facade example" width="487" height="222"></div>
+                </div>
+            </section>
+            <section id="slide_facade_2"><h2>Facade</h2>
+                <div class="ulist">
+                    <div class="title">Cel</div>
+                    <ul>
+                        <li><p>Wzorzec Facade zapewnia jednolity interfejs dla podsystemu.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Konsekwencje</div>
+                    <ul>
+                        <li><p>Wzorzec Facade zmniejsza ilość obiektów, z którymi klient podsystemu musi współpracować.</p></li>
+                        <li><p>Tworzy słabe powiązanie klienta z podsystemem co umożliwia modyfikowanie podsystemu bez wprowadzania zmian w kliencie.</p></li>
+                        <li><p>Klient może wybrać, czy chce komunikować się z podsystemem za pomocą fasady czy za pomocą bezpośrednich odwołań do jego
+                            elementów.</p></li>
+                    </ul>
+                </div>
+                <div class="ulist">
+                    <div class="title">Zastosowanie</div>
+                    <ul>
+                        <li><p>Ułatwienie korzystania ze skomplikowanego podsystemu</p></li>
+                        <li><p>API biblioteki definiujące jej zunifikowany i uproszczony interfejs</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_katalog_wzorców_4"><h2>Katalog wzorców</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Wzorce kreacyjne</p></li>
+                        <li><p>Wzorce behawioralne</p></li>
+                        <li><p>Wzorce strukturalne</p></li>
+                        <li><p><strong>Podsumowanie wzorców GoF</strong></p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_podsumowanie_wzorców_gof"><h2>Podsumowanie wzorców GoF</h2>
+                <div class="ulist">
+                    <ul>
+                        <li><p>Jest wiele sposobów implementowania każdego wzorca.</p></li>
+                        <li><p>Diagram dołączany do opisu wzorca jest tylko przykładem a nie specyfikacją.</p>
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Wzorce są podstawą którą można próbować rozszerzać, parametryzować</p></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><p>Jest wiele podobieństw pomiędzy wzorcami</p></li>
+                        <li><p>Wzorce występują grupowo, współpracując ze sobą</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_różnice_i_podobieństwa"><h2>Różnice i podobieństwa</h2>
+                <table class="tableblock frame-all grid-all" style="width:100%">
+                    <colgroup>
+                        <col style="width:50%">
+                        <col style="width:50%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top"><em>Strategy</em></th>
+                        <th class="tableblock halign-left valign-top"><em>Command</em></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Hermetyzuje algorytm</p></li>
+                                        <li><p>Umożliwia jego dynamiczne podmienianie</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Hermetyzuje żądanie</p></li>
+                                        <li><p>Umożliwia wykonanie żądania przez dowolnego klienta</p></li>
+                                        <li><p>Umożliwia kolejkowanie żądań i wykonanie ich w późniejszym czasie</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="slide_różnice_i_podobieństwa_2"><h2>Różnice i podobieństwa</h2>
+                <table class="tableblock frame-all grid-all" style="width:100%">
+                    <colgroup>
+                        <col style="width:50%">
+                        <col style="width:50%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="tableblock halign-left valign-top"><em>Simple Factory</em></th>
+                        <th class="tableblock halign-left valign-top"><em>Builder</em></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Tworzy gotowy obiekt</p></li>
+                                        <li><p>Potrafi tworzyć różne obiekty na podstawie parametrów</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tableblock halign-left valign-top">
+                            <div>
+                                <div class="ulist">
+                                    <ul>
+                                        <li><p>Składa gotowy obiekt z części</p></li>
+                                        <li><p>Tworzy obiekty podobne różniące się elementami składowymi</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="slide_wzorce_współpracujące"><h2>Wzorce współpracujące</h2>
+                <div class="ulist">
+                    <div class="title">Strategia</div>
+                    <ul>
+                        <li><p>Obiekty <em>Strategy</em> są często produkowane przez obiekty <em>Factory</em></p></li>
+                        <li><p>Wzorzec <em>Strategy</em> może korzystać z wzorca <em>Template Method</em> w przypadku, gdy algorytm jest rozbudowany</p></li>
+                        <li><p>Obiekt <em>Strategy</em> może korzystać ze wzorca <em>Observer</em>, aby informować inne obiekty np. o postępie w wykonaniu
+                            algorytmu</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_wzorce_współpracujące_2"><h2>Wzorce współpracujące</h2>
+                <div class="ulist">
+                    <div class="title">Command</div>
+                    <ul>
+                        <li><p>Wzorzec <em>Chain of Responsibility</em> może używać komend do reprezentowania żądań w postaci obiektów.</p></li>
+                        <li><p>Obiekt <em>Factory</em> może produkować obiekty <em>Command</em>.</p></li>
+                        <li><p>Wzorzec <em>Decorator</em> może posłużyć do dynamicznego rozszerzania odpowiedzialności obiektów <em>Command</em>.</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_antywzorce"><h2>Antywzorce</h2>
+                <div class="ulist">
+                    <div class="title">Antywzorzec pokazuje jak dojść od problemu do złego rozwiązania.</div>
+                    <ul>
+                        <li><p>pokazuje dlaczego złe rozwiązanie wydaje się korzystne</p></li>
+                        <li><p>pokazuje długofalowe skutki takiego rozwiązania</p></li>
+                        <li><p>wskazuje wzorce, które mogą doprowadzić do dobrego rozwiązania</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section id="slide_antywzorce_2"><h2>Antywzorce</h2>
+                <div class="dlist">
+                    <dl>
+                        <dt class="hdlist1">Spaghetti Code</dt>
+                        <dd><p>Kod staje się nieczytelny na skutek używania złożonych struktur językowych.</p></dd>
+                        <dt class="hdlist1">The Blob (God Class)</dt>
+                        <dd><p>Jedna klasa implementuje zachowanie całej aplikacji, podczas gdy inne przechowują dane.</p></dd>
+                        <dt class="hdlist1">Golden Hammer</dt>
+                        <dd><p>Jedno narzędzie jest używane do rozwiązywania większości problemów.</p></dd>
+                    </dl>
+                </div>
+            </section>
+        </section>
+    </div>
+</div>
+<script src="../_shared/reveal.js/lib/js/head.min.js"></script>
+<script src="../_shared/reveal.js/js/reveal.js"></script>
+<script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+    // Display controls in the bottom right corner
+    controls: false,
+    // Display a presentation progress bar
+    progress: true,
+    // Display the page number of the current slide
+    slideNumber: false,
+    // Push each slide change to the browser history
+    history: true,
+    // Enable keyboard shortcuts for navigation
+    keyboard: true,
+    // Enable the slide overview mode
+    overview: true,
+    // Vertical centering of slides
+    center: false,
+    // Enables touch navigation on devices with touch input
+    touch: true,
+    // Loop the presentation
+    loop: false,
+    // Change the presentation direction to be RTL
+    rtl: false,
+    // Turns fragments on and off globally
+    fragments: true,
+    // Flags if the presentation is running in an embedded mode,
+    // i.e. contained within a limited portion of the screen
+    embedded: false,
+    // Number of milliseconds between automatically proceeding to the
+    // next slide, disabled when set to 0, this value can be overwritten
+    // by using a data-autoslide attribute on your slides
+    autoSlide: 0,
+    // Stop auto-sliding after user input
+    autoSlideStoppable: true,
+    // Enable slide navigation via mouse wheel
+    mouseWheel: false,
+    // Hides the address bar on mobile devices
+    hideAddressBar: true,
+    // Opens links in an iframe preview overlay
+    previewLinks: false,
+    // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+    // NOTE setting the theme in the config no longer works in reveal.js 3.x
+    //theme: Reveal.getQueryHash().theme || 'black',
+    // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+    transition: Reveal.getQueryHash().transition || 'fade',
+    // Transition speed (e.g., default, fast, slow)
+    transitionSpeed: 'default',
+    // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+    backgroundTransition: 'fade',
+    // Number of slides away from the current that are visible
+    viewDistance: 3,
+    // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+    parallaxBackgroundImage: '',
+    // Parallax background size in CSS syntax (e.g., "2100px 900px")
+    parallaxBackgroundSize: '',
+
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 720,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.5,
+
+    // Optional libraries used to extend on reveal.js
+    dependencies: [
+        {
+            src: '../_shared/reveal.js/lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+        },
+        {
+            src: '../_shared/reveal.js/plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+        },
+        {
+            src: '../_shared/reveal.js/plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+        },
+
+        {
+            src: '../_shared/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+        },
+        {
+            src: '../_shared/reveal.js/plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+        },
+        {src: '../_shared/reveal.js/plugin/menu/menu.js'}
+    ]
+});</script>
+</body>
+</html>
