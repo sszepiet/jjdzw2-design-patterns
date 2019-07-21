@@ -7,8 +7,8 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport">
-    <link href="../_shared/reveal.js/css/reveal.css" rel="stylesheet">
-    <link rel="stylesheet" href="../_shared/css/custom_serif.css" id="theme">
+    <link href="styles/reveal.js/css/reveal.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/custom_serif.css" id="theme">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     <style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
     /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -377,8 +377,8 @@
     .CodeRay .head .head {
         color: #f4f
     }</style>
-    <link href="../_shared/reveal.js/lib/css/zenburn.css" rel="stylesheet">
-    <script>document.write('<link rel="stylesheet" href="../_shared/reveal.js/css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');</script>
+    <link href="styles/reveal.js/lib/css/zenburn.css" rel="stylesheet">
+    <script>document.write('<link rel="stylesheet" href="styles/reveal.js/css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');</script>
 </head>
 <body>
 <div class="reveal">
@@ -389,7 +389,7 @@
             </p>
         </section>
         <section>
-            <section id="slide_wzorce_projektowe" data-background="../_shared/background.jpg" data-background-size="cover"><h2>Wzorce projektowe</h2></section>
+            <section id="slide_wzorce_projektowe" data-background="styles/background.jpg" data-background-size="cover"><h2>Wzorce projektowe</h2></section>
             <section id="patterns-spis-tresci"><h2>Wzorce projektowe</h2>
                 <div class="ulist">
                     <ul>
@@ -638,7 +638,7 @@
             </section>
         </section>
         <section>
-            <section id="slide_katalog_wzorców" data-background="../_shared/background.jpg" data-background-size="cover"><h2>Katalog wzorców</h2></section>
+            <section id="slide_katalog_wzorców" data-background="styles/background.jpg" data-background-size="cover"><h2>Katalog wzorców</h2></section>
             <section id="catalog-spis-tresci"><h2>Katalog wzorców</h2>
                 <div class="ulist">
                     <ul>
@@ -1241,8 +1241,8 @@
         </section>
     </div>
 </div>
-<script src="../_shared/reveal.js/lib/js/head.min.js"></script>
-<script src="../_shared/reveal.js/js/reveal.js"></script>
+<script src="styles/reveal.js/lib/js/head.min.js"></script>
+<script src="styles/reveal.js/js/reveal.js"></script>
 <script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
     // Display controls in the bottom right corner
@@ -1314,32 +1314,32 @@ Reveal.initialize({
     // Optional libraries used to extend on reveal.js
     dependencies: [
         {
-            src: '../_shared/reveal.js/lib/js/classList.js', condition: function () {
+            src: 'styles/reveal.js/lib/js/classList.js', condition: function () {
                 return !document.body.classList;
             }
         },
         {
-            src: '../_shared/reveal.js/plugin/markdown/marked.js', condition: function () {
+            src: 'styles/reveal.js/plugin/markdown/marked.js', condition: function () {
                 return !!document.querySelector('[data-markdown]');
             }
         },
         {
-            src: '../_shared/reveal.js/plugin/markdown/markdown.js', condition: function () {
+            src: 'styles/reveal.js/plugin/markdown/markdown.js', condition: function () {
                 return !!document.querySelector('[data-markdown]');
             }
         },
 
         {
-            src: '../_shared/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
+            src: 'styles/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
                 return !!document.body.classList;
             }
         },
         {
-            src: '../_shared/reveal.js/plugin/notes/notes.js', async: true, condition: function () {
+            src: 'styles/reveal.js/plugin/notes/notes.js', async: true, condition: function () {
                 return !!document.body.classList;
             }
         },
-        {src: '../_shared/reveal.js/plugin/menu/menu.js'}
+        {src: 'styles/reveal.js/plugin/menu/menu.js'}
     ]
 });</script>
 </body>
